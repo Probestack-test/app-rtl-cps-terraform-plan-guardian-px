@@ -160,7 +160,7 @@
 
   <!-- ═══ HTTP Proxy Connection ═════════════════════════════════════ -->
   <HTTPProxyConnection>
-    <BasePath>/v1</BasePath>
+    <BasePath>/v31</BasePath>
     <Properties/>
   </HTTPProxyConnection>
 
