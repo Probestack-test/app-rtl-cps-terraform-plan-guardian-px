@@ -1,0 +1,941 @@
+{
+  "info" : {
+    "name" : "terraform-plan-guardian Postman Collection",
+    "description" : "Pre-apply safety analysis for Terraform plans. Intercepts `terraform plan` \noutput before `terraform apply` runs, detects destructive operations, \npolicy violations, and hidden risks (like accidentally deleting a database \nor a security group). Prevents the classic \"I ran apply and it destroyed \nproduction\" disaster. Enforces organizational policies at the plan level, \ngiving teams a mandatory safety checkpoint before touching real infrastructure.\n\n\nOpenAPI version: 1.0.0",
+    "schema" : "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "auth" : {
+    "type" : "bearer",
+    "bearer" : [ {
+      "key" : "token",
+      "value" : "{{accessToken}}",
+      "type" : "string"
+    } ]
+  },
+  "variable" : [ {
+    "key" : "baseUrl",
+    "value" : "https://tf-guardian.forgesphere.lightning.com/v1",
+    "type" : "string",
+    "description" : "Override with the base URL of the deployed Apigee proxy."
+  }, {
+    "key" : "accessToken",
+    "value" : "",
+    "type" : "string"
+  }, {
+    "key" : "workspace",
+    "value" : "",
+    "type" : "string",
+    "description" : "Filter by Terraform workspace."
+  }, {
+    "key" : "environment",
+    "value" : "",
+    "type" : "string",
+    "description" : "Filter by environment."
+  }, {
+    "key" : "verdict",
+    "value" : "",
+    "type" : "string",
+    "description" : "Filter by final verdict."
+  }, {
+    "key" : "requestedBy",
+    "value" : "",
+    "type" : "string",
+    "description" : "Filter by requester."
+  }, {
+    "key" : "hasDestructiveChanges",
+    "value" : "",
+    "type" : "string",
+    "description" : "Only include plans with DESTROY or REPLACE operations."
+  }, {
+    "key" : "fromDate",
+    "value" : "",
+    "type" : "string",
+    "description" : "Only include analyses after this time."
+  }, {
+    "key" : "toDate",
+    "value" : "",
+    "type" : "string",
+    "description" : "Only include analyses before this time."
+  }, {
+    "key" : "page",
+    "value" : "",
+    "type" : "string",
+    "description" : "Page number (zero-based)."
+  }, {
+    "key" : "size",
+    "value" : "",
+    "type" : "string",
+    "description" : "Number of items per page."
+  }, {
+    "key" : "analysisId",
+    "value" : "",
+    "type" : "string",
+    "description" : "Unique identifier of the analysis."
+  }, {
+    "key" : "includeResourceChanges",
+    "value" : "",
+    "type" : "string",
+    "description" : "Include the full list of resource changes."
+  }, {
+    "key" : "severity",
+    "value" : "",
+    "type" : "string",
+    "description" : "Filter by severity."
+  }, {
+    "key" : "ruleType",
+    "value" : "",
+    "type" : "string",
+    "description" : "Filter by rule type."
+  }, {
+    "key" : "enabled",
+    "value" : "",
+    "type" : "string",
+    "description" : "Filter by enabled status."
+  } ],
+  "item" : [ {
+    "name" : "Analyze a Terraform plan for destructive operations and policy violations",
+    "request" : {
+      "method" : "POST",
+      "description" : "Analyze a Terraform plan for destructive operations and policy violations\n\nResponses:\n- 202: Plan analysis accepted and running.\n- 400: Invalid request payload or missing required fields.\n- 500: Internal server error.",
+      "header" : [ {
+        "key" : "Content-Type",
+        "value" : "application/json",
+        "type" : "text"
+      } ],
+      "body" : {
+        "mode" : "raw",
+        "raw" : "{\"planSource\":\"INLINE_JSON\",\"planJson\":\"{\\\"format_version\\\":\\\"1.2\\\",\\\"resource_changes\\\":[...]}\",\"planUrl\":\"s3://tf-plans-prod/workspace/payment-infra/plan-2026-11-04.json\",\"workspace\":\"payment-infra-prod\",\"environment\":\"PRODUCTION\",\"requestedBy\":\"amit.kumar@forgesphere.example.com\",\"ciPipelineUrl\":\"https://github.com/forgesphere/payment-infra/actions/runs/1234567\",\"policyProfile\":\"PCI_DSS\",\"approvalMode\":\"BLOCK_ON_FAILURE\",\"notifyChannels\":[\"SLACK\"]}",
+        "options" : {
+          "raw" : {
+            "language" : "json"
+          }
+        }
+      },
+      "url" : {
+        "raw" : "{{baseUrl}}/plans/analyze",
+        "host" : [ "{{baseUrl}}" ],
+        "path" : [ "plans", "analyze" ]
+      }
+    },
+    "response" : [ {
+      "name" : "202 Plan analysis accepted and running.",
+      "originalRequest" : {
+        "method" : "POST",
+        "description" : "Analyze a Terraform plan for destructive operations and policy violations\n\nResponses:\n- 202: Plan analysis accepted and running.\n- 400: Invalid request payload or missing required fields.\n- 500: Internal server error.",
+        "header" : [ {
+          "key" : "Content-Type",
+          "value" : "application/json",
+          "type" : "text"
+        } ],
+        "body" : {
+          "mode" : "raw",
+          "raw" : "{\"planSource\":\"INLINE_JSON\",\"planJson\":\"{\\\"format_version\\\":\\\"1.2\\\",\\\"resource_changes\\\":[...]}\",\"planUrl\":\"s3://tf-plans-prod/workspace/payment-infra/plan-2026-11-04.json\",\"workspace\":\"payment-infra-prod\",\"environment\":\"PRODUCTION\",\"requestedBy\":\"amit.kumar@forgesphere.example.com\",\"ciPipelineUrl\":\"https://github.com/forgesphere/payment-infra/actions/runs/1234567\",\"policyProfile\":\"PCI_DSS\",\"approvalMode\":\"BLOCK_ON_FAILURE\",\"notifyChannels\":[\"SLACK\"]}",
+          "options" : {
+            "raw" : {
+              "language" : "json"
+            }
+          }
+        },
+        "url" : {
+          "raw" : "{{baseUrl}}/plans/analyze",
+          "host" : [ "{{baseUrl}}" ],
+          "path" : [ "plans", "analyze" ]
+        }
+      },
+      "status" : "Plan analysis accepted and running.",
+      "code" : 202,
+      "_postman_previewlanguage" : "json",
+      "header" : [ ],
+      "body" : ""
+    }, {
+      "name" : "400 Invalid request payload or missing required fields.",
+      "originalRequest" : {
+        "method" : "POST",
+        "description" : "Analyze a Terraform plan for destructive operations and policy violations\n\nResponses:\n- 202: Plan analysis accepted and running.\n- 400: Invalid request payload or missing required fields.\n- 500: Internal server error.",
+        "header" : [ {
+          "key" : "Content-Type",
+          "value" : "application/json",
+          "type" : "text"
+        } ],
+        "body" : {
+          "mode" : "raw",
+          "raw" : "{\"planSource\":\"INLINE_JSON\",\"planJson\":\"{\\\"format_version\\\":\\\"1.2\\\",\\\"resource_changes\\\":[...]}\",\"planUrl\":\"s3://tf-plans-prod/workspace/payment-infra/plan-2026-11-04.json\",\"workspace\":\"payment-infra-prod\",\"environment\":\"PRODUCTION\",\"requestedBy\":\"amit.kumar@forgesphere.example.com\",\"ciPipelineUrl\":\"https://github.com/forgesphere/payment-infra/actions/runs/1234567\",\"policyProfile\":\"PCI_DSS\",\"approvalMode\":\"BLOCK_ON_FAILURE\",\"notifyChannels\":[\"SLACK\"]}",
+          "options" : {
+            "raw" : {
+              "language" : "json"
+            }
+          }
+        },
+        "url" : {
+          "raw" : "{{baseUrl}}/plans/analyze",
+          "host" : [ "{{baseUrl}}" ],
+          "path" : [ "plans", "analyze" ]
+        }
+      },
+      "status" : "Invalid request payload or missing required fields.",
+      "code" : 400,
+      "_postman_previewlanguage" : "json",
+      "header" : [ {
+        "key" : "Content-Type",
+        "value" : "application/json"
+      } ],
+      "body" : "{\"status\":400,\"errorCode\":\"INVALID_PLAN_JSON\",\"message\":\"Could not parse plan JSON: missing 'resource_changes' field.\",\"timestamp\":\"2026-01-01T00:00:00Z\",\"path\":\"/v1/plans/analyze\",\"serviceTransactionId\":\"523f52b2-64a5-465e-b245-3efbe78f70ae\"}"
+    }, {
+      "name" : "500 Internal server error.",
+      "originalRequest" : {
+        "method" : "POST",
+        "description" : "Analyze a Terraform plan for destructive operations and policy violations\n\nResponses:\n- 202: Plan analysis accepted and running.\n- 400: Invalid request payload or missing required fields.\n- 500: Internal server error.",
+        "header" : [ {
+          "key" : "Content-Type",
+          "value" : "application/json",
+          "type" : "text"
+        } ],
+        "body" : {
+          "mode" : "raw",
+          "raw" : "{\"planSource\":\"INLINE_JSON\",\"planJson\":\"{\\\"format_version\\\":\\\"1.2\\\",\\\"resource_changes\\\":[...]}\",\"planUrl\":\"s3://tf-plans-prod/workspace/payment-infra/plan-2026-11-04.json\",\"workspace\":\"payment-infra-prod\",\"environment\":\"PRODUCTION\",\"requestedBy\":\"amit.kumar@forgesphere.example.com\",\"ciPipelineUrl\":\"https://github.com/forgesphere/payment-infra/actions/runs/1234567\",\"policyProfile\":\"PCI_DSS\",\"approvalMode\":\"BLOCK_ON_FAILURE\",\"notifyChannels\":[\"SLACK\"]}",
+          "options" : {
+            "raw" : {
+              "language" : "json"
+            }
+          }
+        },
+        "url" : {
+          "raw" : "{{baseUrl}}/plans/analyze",
+          "host" : [ "{{baseUrl}}" ],
+          "path" : [ "plans", "analyze" ]
+        }
+      },
+      "status" : "Internal server error.",
+      "code" : 500,
+      "_postman_previewlanguage" : "json",
+      "header" : [ {
+        "key" : "Content-Type",
+        "value" : "application/json"
+      } ],
+      "body" : "{\"status\":400,\"errorCode\":\"INVALID_PLAN_JSON\",\"message\":\"Could not parse plan JSON: missing 'resource_changes' field.\",\"timestamp\":\"2026-01-01T00:00:00Z\",\"path\":\"/v1/plans/analyze\",\"serviceTransactionId\":\"523f52b2-64a5-465e-b245-3efbe78f70ae\"}"
+    } ]
+  }, {
+    "name" : "List past plan analyses",
+    "request" : {
+      "method" : "GET",
+      "description" : "List past plan analyses\n\nResponses:\n- 200: List of analyses retrieved successfully.\n- 400: Invalid request payload or missing required fields.\n- 500: Internal server error.",
+      "header" : [ ],
+      "url" : {
+        "raw" : "{{baseUrl}}/analyses?workspace={{workspace}}&environment={{environment}}&verdict={{verdict}}&requestedBy={{requestedBy}}&hasDestructiveChanges={{hasDestructiveChanges}}&fromDate={{fromDate}}&toDate={{toDate}}&page={{page}}&size={{size}}",
+        "host" : [ "{{baseUrl}}" ],
+        "path" : [ "analyses" ],
+        "query" : [ {
+          "key" : "workspace",
+          "value" : "sample",
+          "disabled" : true,
+          "description" : "Filter by Terraform workspace."
+        }, {
+          "key" : "environment",
+          "value" : "DEV",
+          "disabled" : true,
+          "description" : "Filter by environment."
+        }, {
+          "key" : "verdict",
+          "value" : "GO",
+          "disabled" : true,
+          "description" : "Filter by final verdict."
+        }, {
+          "key" : "requestedBy",
+          "value" : "sample",
+          "disabled" : true,
+          "description" : "Filter by requester."
+        }, {
+          "key" : "hasDestructiveChanges",
+          "value" : "true",
+          "disabled" : true,
+          "description" : "Only include plans with DESTROY or REPLACE operations."
+        }, {
+          "key" : "fromDate",
+          "value" : "2026-01-01T00:00:00Z",
+          "disabled" : true,
+          "description" : "Only include analyses after this time."
+        }, {
+          "key" : "toDate",
+          "value" : "2026-01-01T00:00:00Z",
+          "disabled" : true,
+          "description" : "Only include analyses before this time."
+        }, {
+          "key" : "page",
+          "value" : "1",
+          "disabled" : true,
+          "description" : "Page number (zero-based)."
+        }, {
+          "key" : "size",
+          "value" : "1",
+          "disabled" : true,
+          "description" : "Number of items per page."
+        } ]
+      }
+    },
+    "response" : [ {
+      "name" : "200 List of analyses retrieved successfully.",
+      "originalRequest" : {
+        "method" : "GET",
+        "description" : "List past plan analyses\n\nResponses:\n- 200: List of analyses retrieved successfully.\n- 400: Invalid request payload or missing required fields.\n- 500: Internal server error.",
+        "header" : [ ],
+        "url" : {
+          "raw" : "{{baseUrl}}/analyses?workspace={{workspace}}&environment={{environment}}&verdict={{verdict}}&requestedBy={{requestedBy}}&hasDestructiveChanges={{hasDestructiveChanges}}&fromDate={{fromDate}}&toDate={{toDate}}&page={{page}}&size={{size}}",
+          "host" : [ "{{baseUrl}}" ],
+          "path" : [ "analyses" ],
+          "query" : [ {
+            "key" : "workspace",
+            "value" : "sample",
+            "disabled" : true,
+            "description" : "Filter by Terraform workspace."
+          }, {
+            "key" : "environment",
+            "value" : "DEV",
+            "disabled" : true,
+            "description" : "Filter by environment."
+          }, {
+            "key" : "verdict",
+            "value" : "GO",
+            "disabled" : true,
+            "description" : "Filter by final verdict."
+          }, {
+            "key" : "requestedBy",
+            "value" : "sample",
+            "disabled" : true,
+            "description" : "Filter by requester."
+          }, {
+            "key" : "hasDestructiveChanges",
+            "value" : "true",
+            "disabled" : true,
+            "description" : "Only include plans with DESTROY or REPLACE operations."
+          }, {
+            "key" : "fromDate",
+            "value" : "2026-01-01T00:00:00Z",
+            "disabled" : true,
+            "description" : "Only include analyses after this time."
+          }, {
+            "key" : "toDate",
+            "value" : "2026-01-01T00:00:00Z",
+            "disabled" : true,
+            "description" : "Only include analyses before this time."
+          }, {
+            "key" : "page",
+            "value" : "1",
+            "disabled" : true,
+            "description" : "Page number (zero-based)."
+          }, {
+            "key" : "size",
+            "value" : "1",
+            "disabled" : true,
+            "description" : "Number of items per page."
+          } ]
+        }
+      },
+      "status" : "List of analyses retrieved successfully.",
+      "code" : 200,
+      "_postman_previewlanguage" : "json",
+      "header" : [ ],
+      "body" : ""
+    }, {
+      "name" : "400 Invalid request payload or missing required fields.",
+      "originalRequest" : {
+        "method" : "GET",
+        "description" : "List past plan analyses\n\nResponses:\n- 200: List of analyses retrieved successfully.\n- 400: Invalid request payload or missing required fields.\n- 500: Internal server error.",
+        "header" : [ ],
+        "url" : {
+          "raw" : "{{baseUrl}}/analyses?workspace={{workspace}}&environment={{environment}}&verdict={{verdict}}&requestedBy={{requestedBy}}&hasDestructiveChanges={{hasDestructiveChanges}}&fromDate={{fromDate}}&toDate={{toDate}}&page={{page}}&size={{size}}",
+          "host" : [ "{{baseUrl}}" ],
+          "path" : [ "analyses" ],
+          "query" : [ {
+            "key" : "workspace",
+            "value" : "sample",
+            "disabled" : true,
+            "description" : "Filter by Terraform workspace."
+          }, {
+            "key" : "environment",
+            "value" : "DEV",
+            "disabled" : true,
+            "description" : "Filter by environment."
+          }, {
+            "key" : "verdict",
+            "value" : "GO",
+            "disabled" : true,
+            "description" : "Filter by final verdict."
+          }, {
+            "key" : "requestedBy",
+            "value" : "sample",
+            "disabled" : true,
+            "description" : "Filter by requester."
+          }, {
+            "key" : "hasDestructiveChanges",
+            "value" : "true",
+            "disabled" : true,
+            "description" : "Only include plans with DESTROY or REPLACE operations."
+          }, {
+            "key" : "fromDate",
+            "value" : "2026-01-01T00:00:00Z",
+            "disabled" : true,
+            "description" : "Only include analyses after this time."
+          }, {
+            "key" : "toDate",
+            "value" : "2026-01-01T00:00:00Z",
+            "disabled" : true,
+            "description" : "Only include analyses before this time."
+          }, {
+            "key" : "page",
+            "value" : "1",
+            "disabled" : true,
+            "description" : "Page number (zero-based)."
+          }, {
+            "key" : "size",
+            "value" : "1",
+            "disabled" : true,
+            "description" : "Number of items per page."
+          } ]
+        }
+      },
+      "status" : "Invalid request payload or missing required fields.",
+      "code" : 400,
+      "_postman_previewlanguage" : "json",
+      "header" : [ {
+        "key" : "Content-Type",
+        "value" : "application/json"
+      } ],
+      "body" : "{\"status\":400,\"errorCode\":\"INVALID_PLAN_JSON\",\"message\":\"Could not parse plan JSON: missing 'resource_changes' field.\",\"timestamp\":\"2026-01-01T00:00:00Z\",\"path\":\"/v1/plans/analyze\",\"serviceTransactionId\":\"523f52b2-64a5-465e-b245-3efbe78f70ae\"}"
+    }, {
+      "name" : "500 Internal server error.",
+      "originalRequest" : {
+        "method" : "GET",
+        "description" : "List past plan analyses\n\nResponses:\n- 200: List of analyses retrieved successfully.\n- 400: Invalid request payload or missing required fields.\n- 500: Internal server error.",
+        "header" : [ ],
+        "url" : {
+          "raw" : "{{baseUrl}}/analyses?workspace={{workspace}}&environment={{environment}}&verdict={{verdict}}&requestedBy={{requestedBy}}&hasDestructiveChanges={{hasDestructiveChanges}}&fromDate={{fromDate}}&toDate={{toDate}}&page={{page}}&size={{size}}",
+          "host" : [ "{{baseUrl}}" ],
+          "path" : [ "analyses" ],
+          "query" : [ {
+            "key" : "workspace",
+            "value" : "sample",
+            "disabled" : true,
+            "description" : "Filter by Terraform workspace."
+          }, {
+            "key" : "environment",
+            "value" : "DEV",
+            "disabled" : true,
+            "description" : "Filter by environment."
+          }, {
+            "key" : "verdict",
+            "value" : "GO",
+            "disabled" : true,
+            "description" : "Filter by final verdict."
+          }, {
+            "key" : "requestedBy",
+            "value" : "sample",
+            "disabled" : true,
+            "description" : "Filter by requester."
+          }, {
+            "key" : "hasDestructiveChanges",
+            "value" : "true",
+            "disabled" : true,
+            "description" : "Only include plans with DESTROY or REPLACE operations."
+          }, {
+            "key" : "fromDate",
+            "value" : "2026-01-01T00:00:00Z",
+            "disabled" : true,
+            "description" : "Only include analyses after this time."
+          }, {
+            "key" : "toDate",
+            "value" : "2026-01-01T00:00:00Z",
+            "disabled" : true,
+            "description" : "Only include analyses before this time."
+          }, {
+            "key" : "page",
+            "value" : "1",
+            "disabled" : true,
+            "description" : "Page number (zero-based)."
+          }, {
+            "key" : "size",
+            "value" : "1",
+            "disabled" : true,
+            "description" : "Number of items per page."
+          } ]
+        }
+      },
+      "status" : "Internal server error.",
+      "code" : 500,
+      "_postman_previewlanguage" : "json",
+      "header" : [ {
+        "key" : "Content-Type",
+        "value" : "application/json"
+      } ],
+      "body" : "{\"status\":400,\"errorCode\":\"INVALID_PLAN_JSON\",\"message\":\"Could not parse plan JSON: missing 'resource_changes' field.\",\"timestamp\":\"2026-01-01T00:00:00Z\",\"path\":\"/v1/plans/analyze\",\"serviceTransactionId\":\"523f52b2-64a5-465e-b245-3efbe78f70ae\"}"
+    } ]
+  }, {
+    "name" : "Get detailed results of a plan analysis",
+    "request" : {
+      "method" : "GET",
+      "description" : "Get detailed results of a plan analysis\n\nResponses:\n- 200: Analysis details retrieved successfully.\n- 404: Analysis ID or policy not found.\n- 500: Internal server error.",
+      "header" : [ ],
+      "url" : {
+        "raw" : "{{baseUrl}}/analyses/:analysisId?includeResourceChanges={{includeResourceChanges}}",
+        "host" : [ "{{baseUrl}}" ],
+        "path" : [ "analyses", ":analysisId" ],
+        "query" : [ {
+          "key" : "includeResourceChanges",
+          "value" : "true",
+          "disabled" : true,
+          "description" : "Include the full list of resource changes."
+        } ],
+        "variable" : [ {
+          "key" : "analysisId",
+          "value" : "00000000-0000-0000-0000-000000000001",
+          "description" : "Unique identifier of the analysis."
+        } ]
+      }
+    },
+    "response" : [ {
+      "name" : "200 Analysis details retrieved successfully.",
+      "originalRequest" : {
+        "method" : "GET",
+        "description" : "Get detailed results of a plan analysis\n\nResponses:\n- 200: Analysis details retrieved successfully.\n- 404: Analysis ID or policy not found.\n- 500: Internal server error.",
+        "header" : [ ],
+        "url" : {
+          "raw" : "{{baseUrl}}/analyses/:analysisId?includeResourceChanges={{includeResourceChanges}}",
+          "host" : [ "{{baseUrl}}" ],
+          "path" : [ "analyses", ":analysisId" ],
+          "query" : [ {
+            "key" : "includeResourceChanges",
+            "value" : "true",
+            "disabled" : true,
+            "description" : "Include the full list of resource changes."
+          } ],
+          "variable" : [ {
+            "key" : "analysisId",
+            "value" : "00000000-0000-0000-0000-000000000001",
+            "description" : "Unique identifier of the analysis."
+          } ]
+        }
+      },
+      "status" : "Analysis details retrieved successfully.",
+      "code" : 200,
+      "_postman_previewlanguage" : "json",
+      "header" : [ ],
+      "body" : ""
+    }, {
+      "name" : "404 Analysis ID or policy not found.",
+      "originalRequest" : {
+        "method" : "GET",
+        "description" : "Get detailed results of a plan analysis\n\nResponses:\n- 200: Analysis details retrieved successfully.\n- 404: Analysis ID or policy not found.\n- 500: Internal server error.",
+        "header" : [ ],
+        "url" : {
+          "raw" : "{{baseUrl}}/analyses/:analysisId?includeResourceChanges={{includeResourceChanges}}",
+          "host" : [ "{{baseUrl}}" ],
+          "path" : [ "analyses", ":analysisId" ],
+          "query" : [ {
+            "key" : "includeResourceChanges",
+            "value" : "true",
+            "disabled" : true,
+            "description" : "Include the full list of resource changes."
+          } ],
+          "variable" : [ {
+            "key" : "analysisId",
+            "value" : "00000000-0000-0000-0000-000000000001",
+            "description" : "Unique identifier of the analysis."
+          } ]
+        }
+      },
+      "status" : "Analysis ID or policy not found.",
+      "code" : 404,
+      "_postman_previewlanguage" : "json",
+      "header" : [ {
+        "key" : "Content-Type",
+        "value" : "application/json"
+      } ],
+      "body" : "{\"status\":400,\"errorCode\":\"INVALID_PLAN_JSON\",\"message\":\"Could not parse plan JSON: missing 'resource_changes' field.\",\"timestamp\":\"2026-01-01T00:00:00Z\",\"path\":\"/v1/plans/analyze\",\"serviceTransactionId\":\"523f52b2-64a5-465e-b245-3efbe78f70ae\"}"
+    }, {
+      "name" : "500 Internal server error.",
+      "originalRequest" : {
+        "method" : "GET",
+        "description" : "Get detailed results of a plan analysis\n\nResponses:\n- 200: Analysis details retrieved successfully.\n- 404: Analysis ID or policy not found.\n- 500: Internal server error.",
+        "header" : [ ],
+        "url" : {
+          "raw" : "{{baseUrl}}/analyses/:analysisId?includeResourceChanges={{includeResourceChanges}}",
+          "host" : [ "{{baseUrl}}" ],
+          "path" : [ "analyses", ":analysisId" ],
+          "query" : [ {
+            "key" : "includeResourceChanges",
+            "value" : "true",
+            "disabled" : true,
+            "description" : "Include the full list of resource changes."
+          } ],
+          "variable" : [ {
+            "key" : "analysisId",
+            "value" : "00000000-0000-0000-0000-000000000001",
+            "description" : "Unique identifier of the analysis."
+          } ]
+        }
+      },
+      "status" : "Internal server error.",
+      "code" : 500,
+      "_postman_previewlanguage" : "json",
+      "header" : [ {
+        "key" : "Content-Type",
+        "value" : "application/json"
+      } ],
+      "body" : "{\"status\":400,\"errorCode\":\"INVALID_PLAN_JSON\",\"message\":\"Could not parse plan JSON: missing 'resource_changes' field.\",\"timestamp\":\"2026-01-01T00:00:00Z\",\"path\":\"/v1/plans/analyze\",\"serviceTransactionId\":\"523f52b2-64a5-465e-b245-3efbe78f70ae\"}"
+    } ]
+  }, {
+    "name" : "List all guardrail policies",
+    "request" : {
+      "method" : "GET",
+      "description" : "List all guardrail policies\n\nResponses:\n- 200: List of policies retrieved successfully.\n- 400: Invalid request payload or missing required fields.\n- 500: Internal server error.",
+      "header" : [ ],
+      "url" : {
+        "raw" : "{{baseUrl}}/policies?severity={{severity}}&environment={{environment}}&ruleType={{ruleType}}&enabled={{enabled}}&page={{page}}&size={{size}}",
+        "host" : [ "{{baseUrl}}" ],
+        "path" : [ "policies" ],
+        "query" : [ {
+          "key" : "severity",
+          "value" : "INFO",
+          "disabled" : true,
+          "description" : "Filter by severity."
+        }, {
+          "key" : "environment",
+          "value" : "DEV",
+          "disabled" : true,
+          "description" : "Filter to policies applying to this environment."
+        }, {
+          "key" : "ruleType",
+          "value" : "RESOURCE_TYPE_BLOCKLIST",
+          "disabled" : true,
+          "description" : "Filter by rule type."
+        }, {
+          "key" : "enabled",
+          "value" : "true",
+          "disabled" : true,
+          "description" : "Filter by enabled status."
+        }, {
+          "key" : "page",
+          "value" : "1",
+          "disabled" : true,
+          "description" : "Page number (zero-based)."
+        }, {
+          "key" : "size",
+          "value" : "1",
+          "disabled" : true,
+          "description" : "Number of items per page."
+        } ]
+      }
+    },
+    "response" : [ {
+      "name" : "200 List of policies retrieved successfully.",
+      "originalRequest" : {
+        "method" : "GET",
+        "description" : "List all guardrail policies\n\nResponses:\n- 200: List of policies retrieved successfully.\n- 400: Invalid request payload or missing required fields.\n- 500: Internal server error.",
+        "header" : [ ],
+        "url" : {
+          "raw" : "{{baseUrl}}/policies?severity={{severity}}&environment={{environment}}&ruleType={{ruleType}}&enabled={{enabled}}&page={{page}}&size={{size}}",
+          "host" : [ "{{baseUrl}}" ],
+          "path" : [ "policies" ],
+          "query" : [ {
+            "key" : "severity",
+            "value" : "INFO",
+            "disabled" : true,
+            "description" : "Filter by severity."
+          }, {
+            "key" : "environment",
+            "value" : "DEV",
+            "disabled" : true,
+            "description" : "Filter to policies applying to this environment."
+          }, {
+            "key" : "ruleType",
+            "value" : "RESOURCE_TYPE_BLOCKLIST",
+            "disabled" : true,
+            "description" : "Filter by rule type."
+          }, {
+            "key" : "enabled",
+            "value" : "true",
+            "disabled" : true,
+            "description" : "Filter by enabled status."
+          }, {
+            "key" : "page",
+            "value" : "1",
+            "disabled" : true,
+            "description" : "Page number (zero-based)."
+          }, {
+            "key" : "size",
+            "value" : "1",
+            "disabled" : true,
+            "description" : "Number of items per page."
+          } ]
+        }
+      },
+      "status" : "List of policies retrieved successfully.",
+      "code" : 200,
+      "_postman_previewlanguage" : "json",
+      "header" : [ {
+        "key" : "Content-Type",
+        "value" : "application/json"
+      } ],
+      "body" : "{\"content\":[{\"policyId\":\"b1a2c3d4-e5f6-7890-1234-567890abcdef\",\"policyName\":\"no-prod-database-deletion\",\"description\":\"Prevents accidental deletion of RDS instances and databases in production.\",\"severity\":\"CRITICAL\",\"ruleType\":\"OPERATION_BLOCKLIST\",\"ruleConfig\":{\"operations\":[\"DESTROY\",\"REPLACE\"],\"resourceTypes\":[\"aws_db_instance\",\"aws_rds_cluster\",\"aws_dynamodb_table\"]},\"appliesTo\":{\"environments\":[\"PRODUCTION\"],\"workspaces\":[\"payment-infra-prod\"],\"resources\":[\"aws_db_instance.payments\"]},\"remediationGuidance\":\"Open a change request with DBA approval; use Terraform import to safely migrate instead of destroying.\",\"enabled\":true,\"createdBy\":\"platform-eng@forgesphere.example.com\",\"createdAt\":\"2026-01-01T00:00:00Z\",\"updatedAt\":\"2026-01-01T00:00:00Z\",\"timesTriggered30d\":12,\"timesBlocked30d\":4}],\"totalElements\":28,\"totalPages\":2,\"page\":0,\"size\":20,\"summary\":{\"totalPolicies\":28,\"enabled\":24,\"disabled\":4,\"criticalCount\":8,\"errorCount\":12,\"warningCount\":6,\"infoCount\":2}}"
+    }, {
+      "name" : "400 Invalid request payload or missing required fields.",
+      "originalRequest" : {
+        "method" : "GET",
+        "description" : "List all guardrail policies\n\nResponses:\n- 200: List of policies retrieved successfully.\n- 400: Invalid request payload or missing required fields.\n- 500: Internal server error.",
+        "header" : [ ],
+        "url" : {
+          "raw" : "{{baseUrl}}/policies?severity={{severity}}&environment={{environment}}&ruleType={{ruleType}}&enabled={{enabled}}&page={{page}}&size={{size}}",
+          "host" : [ "{{baseUrl}}" ],
+          "path" : [ "policies" ],
+          "query" : [ {
+            "key" : "severity",
+            "value" : "INFO",
+            "disabled" : true,
+            "description" : "Filter by severity."
+          }, {
+            "key" : "environment",
+            "value" : "DEV",
+            "disabled" : true,
+            "description" : "Filter to policies applying to this environment."
+          }, {
+            "key" : "ruleType",
+            "value" : "RESOURCE_TYPE_BLOCKLIST",
+            "disabled" : true,
+            "description" : "Filter by rule type."
+          }, {
+            "key" : "enabled",
+            "value" : "true",
+            "disabled" : true,
+            "description" : "Filter by enabled status."
+          }, {
+            "key" : "page",
+            "value" : "1",
+            "disabled" : true,
+            "description" : "Page number (zero-based)."
+          }, {
+            "key" : "size",
+            "value" : "1",
+            "disabled" : true,
+            "description" : "Number of items per page."
+          } ]
+        }
+      },
+      "status" : "Invalid request payload or missing required fields.",
+      "code" : 400,
+      "_postman_previewlanguage" : "json",
+      "header" : [ {
+        "key" : "Content-Type",
+        "value" : "application/json"
+      } ],
+      "body" : "{\"status\":400,\"errorCode\":\"INVALID_PLAN_JSON\",\"message\":\"Could not parse plan JSON: missing 'resource_changes' field.\",\"timestamp\":\"2026-01-01T00:00:00Z\",\"path\":\"/v1/plans/analyze\",\"serviceTransactionId\":\"523f52b2-64a5-465e-b245-3efbe78f70ae\"}"
+    }, {
+      "name" : "500 Internal server error.",
+      "originalRequest" : {
+        "method" : "GET",
+        "description" : "List all guardrail policies\n\nResponses:\n- 200: List of policies retrieved successfully.\n- 400: Invalid request payload or missing required fields.\n- 500: Internal server error.",
+        "header" : [ ],
+        "url" : {
+          "raw" : "{{baseUrl}}/policies?severity={{severity}}&environment={{environment}}&ruleType={{ruleType}}&enabled={{enabled}}&page={{page}}&size={{size}}",
+          "host" : [ "{{baseUrl}}" ],
+          "path" : [ "policies" ],
+          "query" : [ {
+            "key" : "severity",
+            "value" : "INFO",
+            "disabled" : true,
+            "description" : "Filter by severity."
+          }, {
+            "key" : "environment",
+            "value" : "DEV",
+            "disabled" : true,
+            "description" : "Filter to policies applying to this environment."
+          }, {
+            "key" : "ruleType",
+            "value" : "RESOURCE_TYPE_BLOCKLIST",
+            "disabled" : true,
+            "description" : "Filter by rule type."
+          }, {
+            "key" : "enabled",
+            "value" : "true",
+            "disabled" : true,
+            "description" : "Filter by enabled status."
+          }, {
+            "key" : "page",
+            "value" : "1",
+            "disabled" : true,
+            "description" : "Page number (zero-based)."
+          }, {
+            "key" : "size",
+            "value" : "1",
+            "disabled" : true,
+            "description" : "Number of items per page."
+          } ]
+        }
+      },
+      "status" : "Internal server error.",
+      "code" : 500,
+      "_postman_previewlanguage" : "json",
+      "header" : [ {
+        "key" : "Content-Type",
+        "value" : "application/json"
+      } ],
+      "body" : "{\"status\":400,\"errorCode\":\"INVALID_PLAN_JSON\",\"message\":\"Could not parse plan JSON: missing 'resource_changes' field.\",\"timestamp\":\"2026-01-01T00:00:00Z\",\"path\":\"/v1/plans/analyze\",\"serviceTransactionId\":\"523f52b2-64a5-465e-b245-3efbe78f70ae\"}"
+    } ]
+  }, {
+    "name" : "Create a new guardrail policy",
+    "request" : {
+      "method" : "POST",
+      "description" : "Create a new guardrail policy\n\nResponses:\n- 201: Policy created successfully.\n- 400: Invalid request payload or missing required fields.\n- 409: A policy with this name already exists.\n- 500: Internal server error.",
+      "header" : [ {
+        "key" : "Content-Type",
+        "value" : "application/json",
+        "type" : "text"
+      } ],
+      "body" : {
+        "mode" : "raw",
+        "raw" : "{\"policyName\":\"no-prod-database-deletion\",\"description\":\"Prevents accidental deletion of RDS instances and databases in production.\",\"severity\":\"CRITICAL\",\"ruleType\":\"OPERATION_BLOCKLIST\",\"ruleConfig\":{\"operations\":[\"DESTROY\",\"REPLACE\"],\"resourceTypes\":[\"aws_db_instance\",\"aws_rds_cluster\",\"aws_dynamodb_table\"]},\"appliesTo\":{\"environments\":[\"PRODUCTION\"],\"workspaces\":[\"payment-infra-prod\"],\"resources\":[\"aws_db_instance.payments\",\"module.rds.*\"]},\"remediationGuidance\":\"Open a change request with DBA approval; use Terraform import to safely migrate instead of destroying.\",\"enabled\":true,\"createdBy\":\"platform-eng@forgesphere.example.com\"}",
+        "options" : {
+          "raw" : {
+            "language" : "json"
+          }
+        }
+      },
+      "url" : {
+        "raw" : "{{baseUrl}}/policies",
+        "host" : [ "{{baseUrl}}" ],
+        "path" : [ "policies" ]
+      }
+    },
+    "response" : [ {
+      "name" : "201 Policy created successfully.",
+      "originalRequest" : {
+        "method" : "POST",
+        "description" : "Create a new guardrail policy\n\nResponses:\n- 201: Policy created successfully.\n- 400: Invalid request payload or missing required fields.\n- 409: A policy with this name already exists.\n- 500: Internal server error.",
+        "header" : [ {
+          "key" : "Content-Type",
+          "value" : "application/json",
+          "type" : "text"
+        } ],
+        "body" : {
+          "mode" : "raw",
+          "raw" : "{\"policyName\":\"no-prod-database-deletion\",\"description\":\"Prevents accidental deletion of RDS instances and databases in production.\",\"severity\":\"CRITICAL\",\"ruleType\":\"OPERATION_BLOCKLIST\",\"ruleConfig\":{\"operations\":[\"DESTROY\",\"REPLACE\"],\"resourceTypes\":[\"aws_db_instance\",\"aws_rds_cluster\",\"aws_dynamodb_table\"]},\"appliesTo\":{\"environments\":[\"PRODUCTION\"],\"workspaces\":[\"payment-infra-prod\"],\"resources\":[\"aws_db_instance.payments\",\"module.rds.*\"]},\"remediationGuidance\":\"Open a change request with DBA approval; use Terraform import to safely migrate instead of destroying.\",\"enabled\":true,\"createdBy\":\"platform-eng@forgesphere.example.com\"}",
+          "options" : {
+            "raw" : {
+              "language" : "json"
+            }
+          }
+        },
+        "url" : {
+          "raw" : "{{baseUrl}}/policies",
+          "host" : [ "{{baseUrl}}" ],
+          "path" : [ "policies" ]
+        }
+      },
+      "status" : "Policy created successfully.",
+      "code" : 201,
+      "_postman_previewlanguage" : "json",
+      "header" : [ {
+        "key" : "Content-Type",
+        "value" : "application/json"
+      } ],
+      "body" : "{\"policyId\":\"b1a2c3d4-e5f6-7890-1234-567890abcdef\",\"policyName\":\"no-prod-database-deletion\",\"description\":\"Prevents accidental deletion of RDS instances and databases in production.\",\"severity\":\"CRITICAL\",\"ruleType\":\"OPERATION_BLOCKLIST\",\"ruleConfig\":{\"operations\":[\"DESTROY\",\"REPLACE\"],\"resourceTypes\":[\"aws_db_instance\",\"aws_rds_cluster\",\"aws_dynamodb_table\"]},\"appliesTo\":{\"environments\":[\"PRODUCTION\"],\"workspaces\":[\"payment-infra-prod\"],\"resources\":[\"aws_db_instance.payments\"]},\"remediationGuidance\":\"Open a change request with DBA approval; use Terraform import to safely migrate instead of destroying.\",\"enabled\":true,\"createdBy\":\"platform-eng@forgesphere.example.com\",\"createdAt\":\"2026-01-01T00:00:00Z\",\"updatedAt\":\"2026-01-01T00:00:00Z\",\"timesTriggered30d\":12,\"timesBlocked30d\":4}"
+    }, {
+      "name" : "400 Invalid request payload or missing required fields.",
+      "originalRequest" : {
+        "method" : "POST",
+        "description" : "Create a new guardrail policy\n\nResponses:\n- 201: Policy created successfully.\n- 400: Invalid request payload or missing required fields.\n- 409: A policy with this name already exists.\n- 500: Internal server error.",
+        "header" : [ {
+          "key" : "Content-Type",
+          "value" : "application/json",
+          "type" : "text"
+        } ],
+        "body" : {
+          "mode" : "raw",
+          "raw" : "{\"policyName\":\"no-prod-database-deletion\",\"description\":\"Prevents accidental deletion of RDS instances and databases in production.\",\"severity\":\"CRITICAL\",\"ruleType\":\"OPERATION_BLOCKLIST\",\"ruleConfig\":{\"operations\":[\"DESTROY\",\"REPLACE\"],\"resourceTypes\":[\"aws_db_instance\",\"aws_rds_cluster\",\"aws_dynamodb_table\"]},\"appliesTo\":{\"environments\":[\"PRODUCTION\"],\"workspaces\":[\"payment-infra-prod\"],\"resources\":[\"aws_db_instance.payments\",\"module.rds.*\"]},\"remediationGuidance\":\"Open a change request with DBA approval; use Terraform import to safely migrate instead of destroying.\",\"enabled\":true,\"createdBy\":\"platform-eng@forgesphere.example.com\"}",
+          "options" : {
+            "raw" : {
+              "language" : "json"
+            }
+          }
+        },
+        "url" : {
+          "raw" : "{{baseUrl}}/policies",
+          "host" : [ "{{baseUrl}}" ],
+          "path" : [ "policies" ]
+        }
+      },
+      "status" : "Invalid request payload or missing required fields.",
+      "code" : 400,
+      "_postman_previewlanguage" : "json",
+      "header" : [ {
+        "key" : "Content-Type",
+        "value" : "application/json"
+      } ],
+      "body" : "{\"status\":400,\"errorCode\":\"INVALID_PLAN_JSON\",\"message\":\"Could not parse plan JSON: missing 'resource_changes' field.\",\"timestamp\":\"2026-01-01T00:00:00Z\",\"path\":\"/v1/plans/analyze\",\"serviceTransactionId\":\"523f52b2-64a5-465e-b245-3efbe78f70ae\"}"
+    }, {
+      "name" : "409 A policy with this name already exists.",
+      "originalRequest" : {
+        "method" : "POST",
+        "description" : "Create a new guardrail policy\n\nResponses:\n- 201: Policy created successfully.\n- 400: Invalid request payload or missing required fields.\n- 409: A policy with this name already exists.\n- 500: Internal server error.",
+        "header" : [ {
+          "key" : "Content-Type",
+          "value" : "application/json",
+          "type" : "text"
+        } ],
+        "body" : {
+          "mode" : "raw",
+          "raw" : "{\"policyName\":\"no-prod-database-deletion\",\"description\":\"Prevents accidental deletion of RDS instances and databases in production.\",\"severity\":\"CRITICAL\",\"ruleType\":\"OPERATION_BLOCKLIST\",\"ruleConfig\":{\"operations\":[\"DESTROY\",\"REPLACE\"],\"resourceTypes\":[\"aws_db_instance\",\"aws_rds_cluster\",\"aws_dynamodb_table\"]},\"appliesTo\":{\"environments\":[\"PRODUCTION\"],\"workspaces\":[\"payment-infra-prod\"],\"resources\":[\"aws_db_instance.payments\",\"module.rds.*\"]},\"remediationGuidance\":\"Open a change request with DBA approval; use Terraform import to safely migrate instead of destroying.\",\"enabled\":true,\"createdBy\":\"platform-eng@forgesphere.example.com\"}",
+          "options" : {
+            "raw" : {
+              "language" : "json"
+            }
+          }
+        },
+        "url" : {
+          "raw" : "{{baseUrl}}/policies",
+          "host" : [ "{{baseUrl}}" ],
+          "path" : [ "policies" ]
+        }
+      },
+      "status" : "A policy with this name already exists.",
+      "code" : 409,
+      "_postman_previewlanguage" : "json",
+      "header" : [ {
+        "key" : "Content-Type",
+        "value" : "application/json"
+      } ],
+      "body" : "{\"status\":400,\"errorCode\":\"INVALID_PLAN_JSON\",\"message\":\"Could not parse plan JSON: missing 'resource_changes' field.\",\"timestamp\":\"2026-01-01T00:00:00Z\",\"path\":\"/v1/plans/analyze\",\"serviceTransactionId\":\"523f52b2-64a5-465e-b245-3efbe78f70ae\"}"
+    }, {
+      "name" : "500 Internal server error.",
+      "originalRequest" : {
+        "method" : "POST",
+        "description" : "Create a new guardrail policy\n\nResponses:\n- 201: Policy created successfully.\n- 400: Invalid request payload or missing required fields.\n- 409: A policy with this name already exists.\n- 500: Internal server error.",
+        "header" : [ {
+          "key" : "Content-Type",
+          "value" : "application/json",
+          "type" : "text"
+        } ],
+        "body" : {
+          "mode" : "raw",
+          "raw" : "{\"policyName\":\"no-prod-database-deletion\",\"description\":\"Prevents accidental deletion of RDS instances and databases in production.\",\"severity\":\"CRITICAL\",\"ruleType\":\"OPERATION_BLOCKLIST\",\"ruleConfig\":{\"operations\":[\"DESTROY\",\"REPLACE\"],\"resourceTypes\":[\"aws_db_instance\",\"aws_rds_cluster\",\"aws_dynamodb_table\"]},\"appliesTo\":{\"environments\":[\"PRODUCTION\"],\"workspaces\":[\"payment-infra-prod\"],\"resources\":[\"aws_db_instance.payments\",\"module.rds.*\"]},\"remediationGuidance\":\"Open a change request with DBA approval; use Terraform import to safely migrate instead of destroying.\",\"enabled\":true,\"createdBy\":\"platform-eng@forgesphere.example.com\"}",
+          "options" : {
+            "raw" : {
+              "language" : "json"
+            }
+          }
+        },
+        "url" : {
+          "raw" : "{{baseUrl}}/policies",
+          "host" : [ "{{baseUrl}}" ],
+          "path" : [ "policies" ]
+        }
+      },
+      "status" : "Internal server error.",
+      "code" : 500,
+      "_postman_previewlanguage" : "json",
+      "header" : [ {
+        "key" : "Content-Type",
+        "value" : "application/json"
+      } ],
+      "body" : "{\"status\":400,\"errorCode\":\"INVALID_PLAN_JSON\",\"message\":\"Could not parse plan JSON: missing 'resource_changes' field.\",\"timestamp\":\"2026-01-01T00:00:00Z\",\"path\":\"/v1/plans/analyze\",\"serviceTransactionId\":\"523f52b2-64a5-465e-b245-3efbe78f70ae\"}"
+    } ]
+  } ]
+}
