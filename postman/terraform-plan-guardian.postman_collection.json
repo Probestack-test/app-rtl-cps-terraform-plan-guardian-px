@@ -1,7 +1,7 @@
 {
   "info" : {
     "name" : "terraform-plan-guardian Postman Collection",
-    "description" : "Pre-apply safety analysis for Terraform plans. Intercepts `terraform plan` \noutput before `terraform apply` runs, detects destructive operations, \npolicy violations, and hidden risks (like accidentally deleting a database \nor a security group). Prevents the classic \"I ran apply and it destroyed \nproduction\" disaster. Enforces organizational policies at the plan level, \ngiving teams a mandatory safety checkpoint before touching real infrastructure.\n\n\nOpenAPI version: 1.0.0",
+    "description" : "Pre-apply safety analysis for Terraform plans. Intercepts `terraform plan` \noutput before `terraform apply` runs, detects destructive operations, \npolicy violations, and hidden risks (like accidentally deleting a database \nor a security group). Prevents the classic \"I ran apply and it destroyed \nproduction\" disaster. Enforces organizational policies at the plan level, \ngiving teams a mandatory safety checkpoint before touching real infrastructure.\n\n\nOpenAPI version: 2.0.0",
     "schema" : "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
   "auth" : {
@@ -14,7 +14,7 @@
   },
   "variable" : [ {
     "key" : "baseUrl",
-    "value" : "https://tf-guardian.forgesphere.lightning.com/v1",
+    "value" : "https://tf-guardian.forgesphere.lightning.com/v31",
     "type" : "string",
     "description" : "Override with the base URL of the deployed Apigee proxy."
   }, {
@@ -179,7 +179,7 @@
         "key" : "Content-Type",
         "value" : "application/json"
       } ],
-      "body" : "{\"status\":400,\"errorCode\":\"INVALID_PLAN_JSON\",\"message\":\"Could not parse plan JSON: missing 'resource_changes' field.\",\"timestamp\":\"2026-01-01T00:00:00Z\",\"path\":\"/v1/plans/analyze\",\"serviceTransactionId\":\"523f52b2-64a5-465e-b245-3efbe78f70ae\"}"
+      "body" : "{\"status\":400,\"errorCode\":\"INVALID_PLAN_JSON\",\"message\":\"Could not parse plan JSON: missing 'resource_changes' field.\",\"timestamp\":\"2026-01-01T00:00:00Z\",\"path\":\"/v31/plans/analyze\",\"serviceTransactionId\":\"523f52b2-64a5-465e-b245-3efbe78f70ae\"}"
     }, {
       "name" : "500 Internal server error.",
       "originalRequest" : {
@@ -212,7 +212,7 @@
         "key" : "Content-Type",
         "value" : "application/json"
       } ],
-      "body" : "{\"status\":400,\"errorCode\":\"INVALID_PLAN_JSON\",\"message\":\"Could not parse plan JSON: missing 'resource_changes' field.\",\"timestamp\":\"2026-01-01T00:00:00Z\",\"path\":\"/v1/plans/analyze\",\"serviceTransactionId\":\"523f52b2-64a5-465e-b245-3efbe78f70ae\"}"
+      "body" : "{\"status\":400,\"errorCode\":\"INVALID_PLAN_JSON\",\"message\":\"Could not parse plan JSON: missing 'resource_changes' field.\",\"timestamp\":\"2026-01-01T00:00:00Z\",\"path\":\"/v31/plans/analyze\",\"serviceTransactionId\":\"523f52b2-64a5-465e-b245-3efbe78f70ae\"}"
     } ]
   }, {
     "name" : "List past plan analyses",
@@ -400,7 +400,7 @@
         "key" : "Content-Type",
         "value" : "application/json"
       } ],
-      "body" : "{\"status\":400,\"errorCode\":\"INVALID_PLAN_JSON\",\"message\":\"Could not parse plan JSON: missing 'resource_changes' field.\",\"timestamp\":\"2026-01-01T00:00:00Z\",\"path\":\"/v1/plans/analyze\",\"serviceTransactionId\":\"523f52b2-64a5-465e-b245-3efbe78f70ae\"}"
+      "body" : "{\"status\":400,\"errorCode\":\"INVALID_PLAN_JSON\",\"message\":\"Could not parse plan JSON: missing 'resource_changes' field.\",\"timestamp\":\"2026-01-01T00:00:00Z\",\"path\":\"/v31/plans/analyze\",\"serviceTransactionId\":\"523f52b2-64a5-465e-b245-3efbe78f70ae\"}"
     }, {
       "name" : "500 Internal server error.",
       "originalRequest" : {
@@ -466,7 +466,7 @@
         "key" : "Content-Type",
         "value" : "application/json"
       } ],
-      "body" : "{\"status\":400,\"errorCode\":\"INVALID_PLAN_JSON\",\"message\":\"Could not parse plan JSON: missing 'resource_changes' field.\",\"timestamp\":\"2026-01-01T00:00:00Z\",\"path\":\"/v1/plans/analyze\",\"serviceTransactionId\":\"523f52b2-64a5-465e-b245-3efbe78f70ae\"}"
+      "body" : "{\"status\":400,\"errorCode\":\"INVALID_PLAN_JSON\",\"message\":\"Could not parse plan JSON: missing 'resource_changes' field.\",\"timestamp\":\"2026-01-01T00:00:00Z\",\"path\":\"/v31/plans/analyze\",\"serviceTransactionId\":\"523f52b2-64a5-465e-b245-3efbe78f70ae\"}"
     } ]
   }, {
     "name" : "Get detailed results of a plan analysis",
@@ -549,7 +549,7 @@
         "key" : "Content-Type",
         "value" : "application/json"
       } ],
-      "body" : "{\"status\":400,\"errorCode\":\"INVALID_PLAN_JSON\",\"message\":\"Could not parse plan JSON: missing 'resource_changes' field.\",\"timestamp\":\"2026-01-01T00:00:00Z\",\"path\":\"/v1/plans/analyze\",\"serviceTransactionId\":\"523f52b2-64a5-465e-b245-3efbe78f70ae\"}"
+      "body" : "{\"status\":400,\"errorCode\":\"INVALID_PLAN_JSON\",\"message\":\"Could not parse plan JSON: missing 'resource_changes' field.\",\"timestamp\":\"2026-01-01T00:00:00Z\",\"path\":\"/v31/plans/analyze\",\"serviceTransactionId\":\"523f52b2-64a5-465e-b245-3efbe78f70ae\"}"
     }, {
       "name" : "500 Internal server error.",
       "originalRequest" : {
@@ -580,7 +580,7 @@
         "key" : "Content-Type",
         "value" : "application/json"
       } ],
-      "body" : "{\"status\":400,\"errorCode\":\"INVALID_PLAN_JSON\",\"message\":\"Could not parse plan JSON: missing 'resource_changes' field.\",\"timestamp\":\"2026-01-01T00:00:00Z\",\"path\":\"/v1/plans/analyze\",\"serviceTransactionId\":\"523f52b2-64a5-465e-b245-3efbe78f70ae\"}"
+      "body" : "{\"status\":400,\"errorCode\":\"INVALID_PLAN_JSON\",\"message\":\"Could not parse plan JSON: missing 'resource_changes' field.\",\"timestamp\":\"2026-01-01T00:00:00Z\",\"path\":\"/v31/plans/analyze\",\"serviceTransactionId\":\"523f52b2-64a5-465e-b245-3efbe78f70ae\"}"
     } ]
   }, {
     "name" : "List all guardrail policies",
@@ -726,7 +726,7 @@
         "key" : "Content-Type",
         "value" : "application/json"
       } ],
-      "body" : "{\"status\":400,\"errorCode\":\"INVALID_PLAN_JSON\",\"message\":\"Could not parse plan JSON: missing 'resource_changes' field.\",\"timestamp\":\"2026-01-01T00:00:00Z\",\"path\":\"/v1/plans/analyze\",\"serviceTransactionId\":\"523f52b2-64a5-465e-b245-3efbe78f70ae\"}"
+      "body" : "{\"status\":400,\"errorCode\":\"INVALID_PLAN_JSON\",\"message\":\"Could not parse plan JSON: missing 'resource_changes' field.\",\"timestamp\":\"2026-01-01T00:00:00Z\",\"path\":\"/v31/plans/analyze\",\"serviceTransactionId\":\"523f52b2-64a5-465e-b245-3efbe78f70ae\"}"
     }, {
       "name" : "500 Internal server error.",
       "originalRequest" : {
@@ -777,7 +777,7 @@
         "key" : "Content-Type",
         "value" : "application/json"
       } ],
-      "body" : "{\"status\":400,\"errorCode\":\"INVALID_PLAN_JSON\",\"message\":\"Could not parse plan JSON: missing 'resource_changes' field.\",\"timestamp\":\"2026-01-01T00:00:00Z\",\"path\":\"/v1/plans/analyze\",\"serviceTransactionId\":\"523f52b2-64a5-465e-b245-3efbe78f70ae\"}"
+      "body" : "{\"status\":400,\"errorCode\":\"INVALID_PLAN_JSON\",\"message\":\"Could not parse plan JSON: missing 'resource_changes' field.\",\"timestamp\":\"2026-01-01T00:00:00Z\",\"path\":\"/v31/plans/analyze\",\"serviceTransactionId\":\"523f52b2-64a5-465e-b245-3efbe78f70ae\"}"
     } ]
   }, {
     "name" : "Create a new guardrail policy",
@@ -869,7 +869,7 @@
         "key" : "Content-Type",
         "value" : "application/json"
       } ],
-      "body" : "{\"status\":400,\"errorCode\":\"INVALID_PLAN_JSON\",\"message\":\"Could not parse plan JSON: missing 'resource_changes' field.\",\"timestamp\":\"2026-01-01T00:00:00Z\",\"path\":\"/v1/plans/analyze\",\"serviceTransactionId\":\"523f52b2-64a5-465e-b245-3efbe78f70ae\"}"
+      "body" : "{\"status\":400,\"errorCode\":\"INVALID_PLAN_JSON\",\"message\":\"Could not parse plan JSON: missing 'resource_changes' field.\",\"timestamp\":\"2026-01-01T00:00:00Z\",\"path\":\"/v31/plans/analyze\",\"serviceTransactionId\":\"523f52b2-64a5-465e-b245-3efbe78f70ae\"}"
     }, {
       "name" : "409 A policy with this name already exists.",
       "originalRequest" : {
@@ -902,7 +902,7 @@
         "key" : "Content-Type",
         "value" : "application/json"
       } ],
-      "body" : "{\"status\":400,\"errorCode\":\"INVALID_PLAN_JSON\",\"message\":\"Could not parse plan JSON: missing 'resource_changes' field.\",\"timestamp\":\"2026-01-01T00:00:00Z\",\"path\":\"/v1/plans/analyze\",\"serviceTransactionId\":\"523f52b2-64a5-465e-b245-3efbe78f70ae\"}"
+      "body" : "{\"status\":400,\"errorCode\":\"INVALID_PLAN_JSON\",\"message\":\"Could not parse plan JSON: missing 'resource_changes' field.\",\"timestamp\":\"2026-01-01T00:00:00Z\",\"path\":\"/v31/plans/analyze\",\"serviceTransactionId\":\"523f52b2-64a5-465e-b245-3efbe78f70ae\"}"
     }, {
       "name" : "500 Internal server error.",
       "originalRequest" : {
@@ -935,7 +935,7 @@
         "key" : "Content-Type",
         "value" : "application/json"
       } ],
-      "body" : "{\"status\":400,\"errorCode\":\"INVALID_PLAN_JSON\",\"message\":\"Could not parse plan JSON: missing 'resource_changes' field.\",\"timestamp\":\"2026-01-01T00:00:00Z\",\"path\":\"/v1/plans/analyze\",\"serviceTransactionId\":\"523f52b2-64a5-465e-b245-3efbe78f70ae\"}"
+      "body" : "{\"status\":400,\"errorCode\":\"INVALID_PLAN_JSON\",\"message\":\"Could not parse plan JSON: missing 'resource_changes' field.\",\"timestamp\":\"2026-01-01T00:00:00Z\",\"path\":\"/v31/plans/analyze\",\"serviceTransactionId\":\"523f52b2-64a5-465e-b245-3efbe78f70ae\"}"
     } ]
   } ]
 }
